@@ -11,7 +11,7 @@ public class MenuBar extends ProgramController
 {
     JMenuBar menuBar = new JMenuBar();
     
-    // TODO: Add mnemonics for key shortcuts
+    // TODO: Add key shortcuts
     // TODO: Add remaining menus
 
     //File menu
@@ -75,6 +75,13 @@ public class MenuBar extends ProgramController
         editCut  .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { cut();   }});
         editCopy .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { copy();  }});
         editPaste.addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { paste(); }});
+
+        //Edit menu accelerators
+        editUndo .setAccelerator(KeyStroke.getKeyStroke("control Z"));
+        editRedo .setAccelerator(KeyStroke.getKeyStroke("control Y"));
+        editCut  .setAccelerator(KeyStroke.getKeyStroke("control X"));
+        editCopy .setAccelerator(KeyStroke.getKeyStroke("control C"));
+        editPaste.setAccelerator(KeyStroke.getKeyStroke("control V"));
         
         menuBar.add(file);
         menuBar.add(edit);

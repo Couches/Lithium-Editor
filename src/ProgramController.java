@@ -4,13 +4,14 @@ import javax.swing.JOptionPane;
 
 public class ProgramController extends FileGenerator
 {
-    private boolean saved = true;
+    private boolean saved = false;
     private String fileName;
 
     //File functions
     public void newFile()
     {
-        generateFile(JOptionPane.showInputDialog(Display.frame, "Enter new file name:"));
+        generateFile((String) JOptionPane.showInputDialog(Display.frame, "Enter new file name:", "Lithium Editor",
+            JOptionPane.INFORMATION_MESSAGE, Display.icon32x, null, ""));
     }
 
     public void openFile()

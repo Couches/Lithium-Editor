@@ -3,7 +3,6 @@ package src;
 import java.awt.Dimension;
 
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 public class TextField
 {
