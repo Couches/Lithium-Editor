@@ -21,7 +21,7 @@ public class ToolBar
         newLightButton.setToolTipText("New light");
         newEntityButton.setToolTipText("New entity");
         newScriptButton.setToolTipText("New script");
-        compileMapsButton.setToolTipText("Compile maps");
+        compileMapsButton.setToolTipText("Compile maps (or run \"compile_maps.bat\" from the source folder)");
         
         toolBar.setOrientation(SwingConstants.VERTICAL);
 

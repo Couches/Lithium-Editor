@@ -7,7 +7,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
-public class MenuBar
+public class MenuBar extends ProgramController
 {
     JMenuBar menuBar = new JMenuBar();
     
@@ -48,11 +48,11 @@ public class MenuBar
         file.add(fileExit);
 
         //File menu action listeners
-        fileNew   .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { ProgramController.newFile();      }});
-        fileOpen  .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { ProgramController.openFile();     }});
-        fileSave  .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { ProgramController.save();         }});
-        fileSaveAs.addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { ProgramController.saveAs();       }});
-        fileExit  .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { ProgramController.requestClose(); }});
+        fileNew   .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { newFile();      }});
+        fileOpen  .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { openFile();     }});
+        fileSave  .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { save();         }});
+        fileSaveAs.addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { saveAs();       }});
+        fileExit  .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { requestClose(); }});
 
         //File menu accelerators
         fileNew.   setAccelerator(KeyStroke.getKeyStroke("control N"      ));
@@ -70,11 +70,11 @@ public class MenuBar
         edit.add(editPaste);
 
         //Edit menu action listeners
-        editUndo .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { ProgramController.undo();  }});
-        editRedo .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { ProgramController.redo();  }});
-        editCut  .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { ProgramController.cut();   }});
-        editCopy .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { ProgramController.copy();  }});
-        editPaste.addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { ProgramController.paste(); }});
+        editUndo .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { undo();  }});
+        editRedo .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { redo();  }});
+        editCut  .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { cut();   }});
+        editCopy .addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { copy();  }});
+        editPaste.addActionListener(new ActionListener() { public void actionPerformed(ActionEvent ae) { paste(); }});
         
         menuBar.add(file);
         menuBar.add(edit);

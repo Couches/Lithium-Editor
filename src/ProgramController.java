@@ -1,76 +1,85 @@
 package src;
 
 import javax.swing.JOptionPane;
-import javax.swing.JFrame;
 
-public class ProgramController
+public class ProgramController extends FileGenerator
 {
-    private static boolean saved = false;
-    private static String fileName = "temp";
-
-    private static JFrame frame;
-
-    public ProgramController(JFrame frame)
-    {
-        this.frame = frame;
-    }
+    private boolean saved = true;
+    private String fileName;
 
     //File functions
-    public static void newFile()
+    public void newFile()
     {
-        System.out.println("New file");
+        generateFile(JOptionPane.showInputDialog(Display.frame, "Enter new file name:"));
     }
 
-    public static void openFile()
+    public void openFile()
     {
         System.out.println("Open file");
     }
 
-    public static void save()
+    public void save()
     {
         System.out.println("Save");
         saved = true;
     }
 
-    public static void saveAs()
+    public void saveAs()
     {
         System.out.println("Save as");
     }
 
     //Edit functions
-    public static void undo()
+    public void undo()
     {
         System.out.println("Undo");
     }
 
-    public static void redo()
+    public void redo()
     {
         System.out.println("Redo");
     }
 
-    public static void cut()
+    public void cut()
     {
         System.out.println("Cut");
     }
 
-    public static void copy()
+    public void copy()
     {
         System.out.println("Copy");
     }
 
-    public static void paste()
+    public void paste()
     {
         System.out.println("Paste");
     }
 
     //Close function that makes sure file cannot be closed without saving, unless wanted
-    public static void requestClose()
+    public void requestClose()
     {
         if (!saved)
         {
-            JOptionPane saveChanges = new JOptionPane();
-            saveChanges.showConfirmDialog(frame, "Save changes to \"" + fileName + "\" before closing?", "Lithium Editor", 
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, Display.icon32x);
+            switch(JOptionPane.showConfirmDialog(Display.frame, "Save changes to \"" + fileName + "\" before closing?", "Lithium Editor", 
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, Display.icon32x))
+            {
+                case 0:
+                    save();
+                    System.out.println("Exited with saving...");
+                    System.exit(1);
+                    break;
+                case 1:
+                    System.out.println("Exited without saving...");
+                    System.exit(1);
+                    break;
+                case 2:
+                    System.out.println("Canceled...");
+                    break;
+            }
+        } 
+        else
+        {
+            System.exit(1);
         }
     }
 }

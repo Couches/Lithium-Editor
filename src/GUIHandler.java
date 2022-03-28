@@ -10,6 +10,7 @@ public class GUIHandler
     {
         MenuBar menuBar = new MenuBar(display);
         ToolBar toolBar = new ToolBar(display);
-        TextField textField = new TextField(display);
+        
+        display.getFrame().setVisible(true);
     }
 }

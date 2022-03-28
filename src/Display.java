@@ -11,7 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 
-public class Display
+public class Display extends ProgramController
 {
     public static JFrame frame = new JFrame();
     public static JPanel panel = new JPanel();
@@ -41,14 +41,14 @@ public class Display
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
         
         frame.setTitle(title);
-        frame.add(panel);
+        // frame.add(panel);
         frame.setSize(width, height);
         frame.setLocationRelativeTo(null);
 
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
-                ProgramController.requestClose();
+                requestClose();
             }
         });
     }
