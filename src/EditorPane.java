@@ -10,10 +10,10 @@ import java.awt.GridLayout;
 
 class EditorPane extends JPanel
 {
-    private RenderPane frontRenderPane = new RenderPane();
-    private RenderPane topRenderPane = new RenderPane();
-    private RenderPane leftRenderPane = new RenderPane();
-    private RenderPane rightRenderPane = new RenderPane();
+    private RenderPane frontRenderPane = new RenderPane(0);
+    private RenderPane topRenderPane = new RenderPane(1);
+    private RenderPane leftRenderPane = new RenderPane(2);
+    private RenderPane rightRenderPane = new RenderPane(3);
 
     public EditorPane(Display display)
     {

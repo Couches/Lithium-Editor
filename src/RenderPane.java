@@ -12,6 +12,8 @@ import java.awt.event.MouseMotionListener;
 
 public class RenderPane extends JPanel implements MouseListener, MouseMotionListener
 {
+    private int viewpoint;
+
     private int staticX = 0;
     private int staticY = 0;
 
@@ -21,14 +23,29 @@ public class RenderPane extends JPanel implements MouseListener, MouseMotionList
     private int startX, startY;
     private int walkX, walkY;
 
+    String viewpoints[] = { "Front", "Top", "Left", "Right" };
+
     JLabel cameraXLabel = new JLabel("Camera X: " + cameraX);
     JLabel cameraYLabel = new JLabel("Camera Y: " + cameraY);
 
-    public RenderPane()
+    Cube cubeList[] = {
+        new Cube(0.0, 0.0, 0.0, 250.0, 10.0, 250.0), //Floor Rect
+        new Cube(0.0, 25.0, 0.0, 25.0, 25.0, 25.0),
+        new Cube(225.0, 25.0, 225.0, 25.0, 25.0, 25.0),
+        new Cube(225.0, 25.0, 0.0, 25.0, 25.0, 25.0)
+    };
+
+    //Specify viewport to set direction of camera on scene
+    // 0-front 1-top 2-left 3-right
+    public RenderPane(int viewpoint)
     {
+        this.viewpoint = viewpoint;
+
         addMouseListener(this);
         addMouseMotionListener(this);
 
+        JLabel viewpointLabel = new JLabel("Viewpoint: " + viewpoints[viewpoint]);
+        add(viewpointLabel);
         add(cameraXLabel);
         add(cameraYLabel);
 
@@ -41,10 +58,12 @@ public class RenderPane extends JPanel implements MouseListener, MouseMotionList
     {
         super.paintComponent(g);
 
-        g.setColor(Color.CYAN);
-        g.fillRect(-cameraX, -cameraY, this.getWidth(), this.getHeight());
-
-        System.out.println("Painted");
+        g.setColor(Color.BLACK);
+        
+        for (int i = 0; i < cubeList.length; i++)
+        {
+            cubeList[i].drawCube(viewpoint, g, -cameraX, -cameraY);
+        }
     }
 
     public void update()
