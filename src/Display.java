@@ -11,12 +11,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 
-public class Display extends ProgramController
+public class Display
 {
-    JFrame frame = new JFrame();
-    JPanel panel = new JPanel();
+    public static JFrame frame = new JFrame();
+    public static JPanel panel = new JPanel();
 
-    ImageIcon icon = new ImageIcon("res\\images\\LithiumEditor128x.png");
+    public static ImageIcon icon32x =  new ImageIcon("res\\images\\LithiumEditor32x.png" );
+    public static ImageIcon icon128x = new ImageIcon("res\\images\\LithiumEditor128x.png");
+    public static ImageIcon icon256x = new ImageIcon("res\\images\\LithiumEditor256x.png");
 
     public Display(String title, int width, int height)
     {
@@ -34,7 +36,7 @@ public class Display extends ProgramController
             System.out.println("Look and Feel not set");
         }
 
-        frame.setIconImage(icon.getImage());
+        frame.setIconImage(icon128x.getImage());
 
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
         
@@ -46,7 +48,7 @@ public class Display extends ProgramController
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
-                requestClose();
+                ProgramController.requestClose();
             }
         });
     }
