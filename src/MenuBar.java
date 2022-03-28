@@ -33,6 +33,19 @@ public class MenuBar extends ProgramController
     JMenuItem editCopy = new JMenuItem("Copy");
     JMenuItem editPaste = new JMenuItem("Paste");
 
+    //View menu
+    JMenu view = new JMenu("View");
+
+    //Zoom menu
+    JMenu viewZoom = new JMenu("Zoom...");
+
+    JMenuItem zoom10 = new JMenuItem("10%");
+    JMenuItem zoom25 = new JMenuItem("25%");
+    JMenuItem zoom50 = new JMenuItem("50%");
+    JMenuItem zoom100 = new JMenuItem("100%");
+    JMenuItem zoom200 = new JMenuItem("200%");
+
+
 
 
     public MenuBar(Display display)
@@ -83,8 +96,19 @@ public class MenuBar extends ProgramController
         editCopy .setAccelerator(KeyStroke.getKeyStroke("control C"));
         editPaste.setAccelerator(KeyStroke.getKeyStroke("control V"));
         
+        //Add menu items to View menu
+        view.add(viewZoom);
+
+        //Add menu items to Zoom menu
+        viewZoom.add(zoom10);
+        viewZoom.add(zoom25);
+        viewZoom.add(zoom50);
+        viewZoom.add(zoom100);
+        viewZoom.add(zoom200);
+
         menuBar.add(file);
         menuBar.add(edit);
+        menuBar.add(view);
 
         display.getFrame().setJMenuBar(menuBar);
     }

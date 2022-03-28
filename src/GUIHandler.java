@@ -10,6 +10,7 @@ public class GUIHandler
     {
         MenuBar menuBar = new MenuBar(display);
         ToolBar toolBar = new ToolBar(display);
+        EditorPane editorPane = new EditorPane(display);
         
         display.getFrame().setVisible(true);
     }
