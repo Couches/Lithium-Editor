@@ -30,12 +30,7 @@ public class Display
     public Display(String title, int width, int height)
     {
         UIManager.LookAndFeelInfo[] looks = UIManager.getInstalledLookAndFeels();
-
-        // Prints out Look and Feel options into console
-        for (UIManager.LookAndFeelInfo look : looks) {
-            System.out.println(look.getClassName());
-        }
-
+        
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }

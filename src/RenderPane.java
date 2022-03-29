@@ -1,77 +1,53 @@
 package src;
 
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.*;
+import java.awt.geom.*;
+import javax.swing.*;
 
-import java.awt.Graphics;
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class RenderPane extends JPanel implements MouseListener, MouseMotionListener
 {
-    private int viewpoint;
-
+    //Camera mouse movement variables
     private int staticX = 0;
     private int staticY = 0;
 
-    private int cameraX = 0;
-    private int cameraY = 0;
+    public int cameraX = 0;
+    public int cameraY = 0;
 
-    private int startX, startY;
-    private int walkX, walkY;
+    private int startX;
+    private int startY;
 
-    String viewpoints[] = { "Front", "Top", "Left", "Right" };
+    private int walkX;
+    private int walkY;
+    
+    public JLabel cameraLabel = new JLabel();
 
-    JLabel cameraXLabel = new JLabel("Camera X: " + cameraX);
-    JLabel cameraYLabel = new JLabel("Camera Y: " + cameraY);
+    Mesh sphereMesh = new Mesh("res\\models\\sphere.obj");
 
-    Cube cubeList[] = {
-        new Cube(0.0, 0.0, 0.0, 250.0, 10.0, 250.0), //Floor Rect
-        new Cube(0.0, 25.0, 0.0, 25.0, 25.0, 25.0),
-        new Cube(225.0, 25.0, 225.0, 25.0, 25.0, 25.0),
-        new Cube(225.0, 25.0, 0.0, 25.0, 25.0, 25.0)
-    };
+    Entity entities[] = { new Entity(sphereMesh), new Entity(sphereMesh), new Entity(sphereMesh) };
 
     //Specify viewport to set direction of camera on scene
     // 0-front 1-top 2-left 3-right
-    public RenderPane(int viewpoint)
+    public RenderPane()
     {
-        this.viewpoint = viewpoint;
-
         addMouseListener(this);
         addMouseMotionListener(this);
 
-        JLabel viewpointLabel = new JLabel("Viewpoint: " + viewpoints[viewpoint]);
-        add(viewpointLabel);
-        add(cameraXLabel);
-        add(cameraYLabel);
+        add(cameraLabel);
 
         setBackground(new Color(120, 120, 120));
 
         update();
     }
-
-    public void paintComponent(Graphics g)
-    {
-        super.paintComponent(g);
-
-        g.setColor(Color.BLACK);
-        
-        for (int i = 0; i < cubeList.length; i++)
-        {
-            cubeList[i].drawCube(viewpoint, g, -cameraX, -cameraY);
-        }
-    }
-
+    
     public void update()
     {
-        cameraXLabel.setText("Camera X: " + cameraX);
-        cameraYLabel.setText("Camera Y: " + cameraY);
-
         setBorder(BorderFactory.createLineBorder(Color.white));
+
+        cameraLabel.setText("Camera X:" + cameraX + " Camera Y:" + cameraY);   
     }
 
     public RenderPane getRenderPane()
