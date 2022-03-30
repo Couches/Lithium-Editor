@@ -12,6 +12,10 @@ public class Entity
     private double scaleY = 1.0;
     private double scaleZ = 1.0;
 
+    private double rotationX;
+    private double rotationY;
+    private double rotationZ;
+
     public Entity()
     {
 
@@ -63,6 +67,36 @@ public class Entity
         this.scaleX = scaleX;
         this.scaleY = scaleY;
         this.scaleZ = scaleZ;
+    }
+
+    /**
+    * Creates a new entity with translations and scale
+    * @param mesh Mesh of entity
+    * @param translationX translation of entity on X axis
+    * @param translationY translation of entity on Y axis
+    * @param translationZ translation of entity on Z axis
+    * @param scaleX scale of entity on X axis
+    * @param scaleY scale of entity on Y axis
+    * @param scaleZ scale of entity on Z axis
+    * @param rotationX rotation of entity on X axis
+    * @param rotationY rotation of entity on Y axis
+    * @param rotationZ rotation of entity on Z axis
+    */
+    public Entity(Mesh mesh, double translationX, double translationY, double translationZ, double scaleX, double scaleY, double scaleZ, double rotationX, double rotationY, double rotationZ)
+    {
+        this.mesh = mesh;
+
+        this.translationX = translationX;
+        this.translationY = translationY;
+        this.translationZ = translationZ;
+
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
+        this.scaleZ = scaleZ;
+
+        this.rotationX = rotationX;
+        this.rotationY = rotationY;
+        this.rotationZ = rotationZ;
     }
 
     //Getters
@@ -125,6 +159,39 @@ public class Entity
     {
         return this.translationZ;
     }
+
+
+
+    //Rotation getters
+
+    /**
+    * Returns entity rotation on the X axis
+    */
+    public double getRotationX()
+    {
+        return this.rotationX;
+    }
+
+    /**
+    * Returns entity rotation on the Y axis
+    */
+    public double getRotationY()
+    {
+        return this.rotationY;
+    }
+
+    /**
+    * Returns entity rotation on the Z axis
+    */
+    public double getRotationZ()
+    {
+        return this.rotationZ;
+    }
+
+
+
+
+
 
     //Setters
 
@@ -298,5 +365,94 @@ public class Entity
         this.translationX += translateX;
         this.translationY += translateY;
         this.translationZ += translateZ;
+    }
+
+
+
+
+
+    //Rotation setters
+
+    /**
+    * Sets the exact rotation of entity on the X axis
+    * @param rotationX sets rotation on the X axis
+    */
+    public void setRotationX(double rotationX)
+    {
+        this.rotationX = rotationX;
+    }
+
+    /**
+    * Sets the exact rotation of entity on the Y axis
+    * @param rotationY sets rotation on the Y axis
+    */
+    public void setRotationY(double rotationY)
+    {
+        this.rotationY = rotationY;
+    }
+
+    /**
+    * Sets the exact rotation of entity on the Z axis
+    * @param rotationZ sets rotation on the Z axis
+    */
+    public void setRotationZ(double rotationZ)
+    {
+        this.rotationZ = rotationZ;
+    }
+
+    /**
+    * Sets the exact rotation of entity on the X, Y and Z axes
+    * @param rotationX sets rotation on the X axis
+    * @param rotationY sets rotation on the Y axis
+    * @param rotationZ sets rotation on the Z axis
+    */
+    public void setRotation(double rotationX, double rotationY, double rotationZ)
+    {
+        this.rotationX = rotationX;
+        this.rotationY = rotationY;
+        this.rotationZ = rotationZ;
+    }
+
+
+    //Rotation incrementors
+
+    /**
+    * Rotates the entity on the X axis
+    * @param rotateX rotation on the X axis
+    */
+    public void rotateX(double rotateX)
+    {
+        this.rotationX += rotateX;
+    }
+
+    /**
+    * Rotates the entity on the Y axis
+    * @param rotateY rotation on the Y axis
+    */
+    public void rotateY(double rotateY)
+    {
+        this.rotationY += rotateY;
+    }
+
+    /**
+    * Rotates the entity on the Z axis
+    * @param rotateZ rotation on the Z axis
+    */
+    public void rotateZ(double rotateZ)
+    {
+        this.rotationZ += rotateZ;
+    }
+
+    /**
+    * Rotates the entity on the X, Y and Z axes
+    * @param rotateX rotation on the X axis
+    * @param rotateY rotation on the Y axis
+    * @param rotateZ rotation on the Z axis
+    */
+    public void rotate(double rotateX, double rotateY, double rotateZ)
+    {
+        this.rotationX += rotateX;
+        this.rotationY += rotateY;
+        this.rotationZ += rotateZ;
     }
 }

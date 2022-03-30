@@ -11,9 +11,7 @@ class EditorPane extends JPanel
         this.setLayout(new GridLayout(2, 2));
 
         add(new RenderPane2D());
-        // add(new RenderPane2D());
-        // add(new RenderPane2D());
-        // add(new RenderPane2D());
+        add(new RenderPane3D());
 
         display.addElement(this);
     }

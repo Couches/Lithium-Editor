@@ -1,17 +1,13 @@
 package src;
 
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.event.*;
 import javax.swing.*;
-
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 public class RenderPane extends JPanel implements MouseListener, MouseMotionListener
 {
     //Viewport settings
-    private boolean wireframe;
+    public boolean wireframe = true;
 
     //Camera mouse movement variables
     private int staticX = 0;
@@ -27,6 +23,7 @@ public class RenderPane extends JPanel implements MouseListener, MouseMotionList
     private int walkY;
     
     public JLabel cameraLabel = new JLabel();
+    private JButton wireframeButton = new JButton();
 
     Mesh sphereMesh = new Mesh("res\\models\\sphere.obj");
 
@@ -40,6 +37,19 @@ public class RenderPane extends JPanel implements MouseListener, MouseMotionList
         addMouseMotionListener(this);
 
         add(cameraLabel);
+        add(wireframeButton);
+
+        wireframeButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                wireframe = !wireframe;
+                update();
+            }
+        });
+
+        
 
         setBackground(new Color(120, 120, 120));
 
@@ -50,7 +60,8 @@ public class RenderPane extends JPanel implements MouseListener, MouseMotionList
     {
         setBorder(BorderFactory.createLineBorder(Color.white));
 
-        cameraLabel.setText("Camera X:" + cameraX + " Camera Y:" + cameraY);   
+        cameraLabel.setText("Camera X:" + cameraX + " Camera Y:" + cameraY); 
+        wireframeButton.setText("Wireframe: " + (wireframe ? "On" : "Off"));
     }
 
     public RenderPane getRenderPane()

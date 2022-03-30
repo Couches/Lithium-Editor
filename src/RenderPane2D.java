@@ -1,49 +1,40 @@
 package src;
 
-
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Graphics;
-import java.awt.RenderingHints;
-import java.awt.Color;
-import java.awt.BasicStroke;
-import java.awt.GradientPaint;
-
-
-import java.awt.geom.*;
-
-import java.util.ArrayList;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
-
-import javax.swing.*;
-
-import javax.swing.JLabel;
 
 class RenderPane2D extends RenderPane
 {
+    Entity entities[] = {
+        new Entity(new Mesh("res\\models\\monkey.obj"), 50, 50, 50, 50, 50, 50),
+        new Entity(new Mesh("res\\models\\donut.obj"), 250, 50, 250, 50, 50, 50),
+        new Entity(new Mesh("res\\models\\cone2.obj"), -150, 0, 0, 100, 100, 100)
+    };
+
+    private boolean antialiasing = false;
+    RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        RenderingHints rh2 = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-
-        g2d.setRenderingHints(rh);
-        g2d.setRenderingHints(rh2);
+        if (antialiasing) g2d.setRenderingHints(rh);
 
         g2d.setStroke(new BasicStroke(1));
 
         //g2d.drawLine(20 - cameraX, 20 - cameraY, 100 - cameraX, 100 - cameraY);
 
         //renderEntity(new Entity(new Mesh("res\\models\\cone.obj"), 50, 50, 50, 50, 50, 50), g2d);
-        renderEntity(new Entity(new Mesh("res\\models\\monkey.obj"), 250, 50, 250, 50, 50, 50), g2d, wireframe);
+        for (int i = 0; i < entities.length; i++)
+        {
+            renderEntity(entities[i], g2d, wireframe);
+        }
     }
 
     public void renderEntity(Entity entity, Graphics2D g2d, boolean wireframe)
     {
-        Path2D myPath = new Path2D.Double();
-
         ArrayList<Vector3> vertices = entity.getMesh().getVertices();
         List<int[]> faces = entity.getMesh().getFaces();
 
@@ -59,14 +50,14 @@ class RenderPane2D extends RenderPane
     
                 g2d.drawPolygon(
                     new int[]{
-                        (int) (-vertices.get(faces.get(i)[0]).getX() * entity.getScaleX() - cameraX),
-                        (int) (-vertices.get(faces.get(i)[1]).getX() * entity.getScaleX() - cameraX),
-                        (int) (-vertices.get(faces.get(i)[2]).getX() * entity.getScaleX() - cameraX),
+                        (int) (-vertices.get(faces.get(i)[0]).getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
+                        (int) (-vertices.get(faces.get(i)[1]).getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
+                        (int) (-vertices.get(faces.get(i)[2]).getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
                     },
                     new int[]{
-                        (int) (-vertices.get(faces.get(i)[0]).getY() * entity.getScaleY() - cameraY),
-                        (int) (-vertices.get(faces.get(i)[1]).getY() * entity.getScaleY() - cameraY),
-                        (int) (-vertices.get(faces.get(i)[2]).getY() * entity.getScaleY() - cameraY)
+                        (int) (-vertices.get(faces.get(i)[0]).getY() * entity.getScaleY() - cameraY + entity.getTranslationZ()),
+                        (int) (-vertices.get(faces.get(i)[1]).getY() * entity.getScaleY() - cameraY + entity.getTranslationZ()),
+                        (int) (-vertices.get(faces.get(i)[2]).getY() * entity.getScaleY() - cameraY + entity.getTranslationZ())
                     },
                 3);
             }
@@ -83,14 +74,14 @@ class RenderPane2D extends RenderPane
     
                 g2d.fillPolygon(
                     new int[]{
-                        (int) (vertices.get(faces.get(i)[0]).getX() * entity.getScaleX() - cameraX),
-                        (int) (vertices.get(faces.get(i)[1]).getX() * entity.getScaleX() - cameraX),
-                        (int) (vertices.get(faces.get(i)[2]).getX() * entity.getScaleX() - cameraX),
+                        (int) (-vertices.get(faces.get(i)[0]).getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
+                        (int) (-vertices.get(faces.get(i)[1]).getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
+                        (int) (-vertices.get(faces.get(i)[2]).getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
                     },
                     new int[]{
-                        (int) (vertices.get(faces.get(i)[0]).getY() * entity.getScaleY() - cameraY),
-                        (int) (vertices.get(faces.get(i)[1]).getY() * entity.getScaleY() - cameraY),
-                        (int) (vertices.get(faces.get(i)[2]).getY() * entity.getScaleY() - cameraY)
+                        (int) (-vertices.get(faces.get(i)[0]).getY() * entity.getScaleY() - cameraY + entity.getTranslationZ()),
+                        (int) (-vertices.get(faces.get(i)[1]).getY() * entity.getScaleY() - cameraY + entity.getTranslationZ()),
+                        (int) (-vertices.get(faces.get(i)[2]).getY() * entity.getScaleY() - cameraY + entity.getTranslationZ())
                     },
                 3);
             }

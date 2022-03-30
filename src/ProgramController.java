@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 public class ProgramController extends FileGenerator
 {
-    private boolean saved = false;
+    private boolean saved = true;
     private String fileName;
 
     //File functions
