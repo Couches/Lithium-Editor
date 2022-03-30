@@ -10,6 +10,9 @@ import java.awt.event.MouseMotionListener;
 
 public class RenderPane extends JPanel implements MouseListener, MouseMotionListener
 {
+    //Viewport settings
+    private boolean wireframe;
+
     //Camera mouse movement variables
     private int staticX = 0;
     private int staticY = 0;

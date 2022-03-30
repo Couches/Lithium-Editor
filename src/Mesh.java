@@ -3,6 +3,7 @@ package src;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,7 +11,7 @@ public class Mesh
 {
     ArrayList<Vector3> vertices = new ArrayList<Vector3>();
 
-    ArrayList<Integer> indices = new ArrayList<Integer>();
+    List<int[]> faces = new ArrayList<int[]>();
 
     //Constructor for empty mesh
 
@@ -31,9 +32,9 @@ public class Mesh
         return this.vertices;
     }
 
-    public ArrayList<Integer> getIndices()
+    public List<int[]> getFaces()
     {
-        return this.indices;
+        return this.faces;
     }
 
     //Creates mesh from an OBJ file
@@ -59,14 +60,14 @@ public class Mesh
                     vertices.add(new Vector3(Double.parseDouble(next[1]), Double.parseDouble(next[2]), Double.parseDouble(next[3])));
                 }
 
-                //Adds face indices to indices list by splitting row on " " and "/"
+                //Separates face coordinates and adds to face list on "/"
 
                 if (next[0].equals("f"))
                 {
-                    indices.add(Integer.parseInt(next[1]) - 1);
-                    indices.add(Integer.parseInt(next[2]) - 1);
-                    indices.add(Integer.parseInt(next[3]) - 1);
+                    faces.add(new int[] { Integer.parseInt(next[1].split("/")[0]) - 1, Integer.parseInt(next[2].split("/")[0]) - 1, Integer.parseInt(next[3].split("/")[0]) - 1});
                 }
+
+                
             }
         }
         catch (FileNotFoundException e)
