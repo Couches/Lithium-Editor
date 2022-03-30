@@ -4,17 +4,17 @@ public class Entity
 {
     private Mesh mesh;
 
-    private double translationX;
-    private double translationY;
-    private double translationZ;
+    private float translationX;
+    private float translationY;
+    private float translationZ;
 
-    private double scaleX = 1.0;
-    private double scaleY = 1.0;
-    private double scaleZ = 1.0;
+    private float scaleX = 1.0f;
+    private float scaleY = 1.0f;
+    private float scaleZ = 1.0f;
 
-    private double rotationX;
-    private double rotationY;
-    private double rotationZ;
+    private float rotationX;
+    private float rotationY;
+    private float rotationZ;
 
     public Entity()
     {
@@ -37,7 +37,7 @@ public class Entity
     * @param translationY translation of entity on Y axis
     * @param translationZ translation of entity on Z axis
     */
-    public Entity(Mesh mesh, double translationX, double translationY, double translationZ)
+    public Entity(Mesh mesh, float translationX, float translationY, float translationZ)
     {
         this.mesh = mesh;
 
@@ -56,7 +56,7 @@ public class Entity
     * @param scaleY scale of entity on Y axis
     * @param scaleZ scale of entity on Z axis
     */
-    public Entity(Mesh mesh, double translationX, double translationY, double translationZ, double scaleX, double scaleY, double scaleZ)
+    public Entity(Mesh mesh, float translationX, float translationY, float translationZ, float scaleX, float scaleY, float scaleZ)
     {
         this.mesh = mesh;
 
@@ -82,7 +82,7 @@ public class Entity
     * @param rotationY rotation of entity on Y axis
     * @param rotationZ rotation of entity on Z axis
     */
-    public Entity(Mesh mesh, double translationX, double translationY, double translationZ, double scaleX, double scaleY, double scaleZ, double rotationX, double rotationY, double rotationZ)
+    public Entity(Mesh mesh, float translationX, float translationY, float translationZ, float scaleX, float scaleY, float scaleZ, float rotationX, float rotationY, float rotationZ)
     {
         this.mesh = mesh;
 
@@ -111,7 +111,7 @@ public class Entity
     /**
     * Returns entity scale on the X axis
     */
-    public double getScaleX()
+    public float getScaleX()
     {
         return this.scaleX;
     }
@@ -119,7 +119,7 @@ public class Entity
     /**
     * Returns entity scale on the Y axis
     */
-    public double getScaleY()
+    public float getScaleY()
     {
         return this.scaleY;
     }
@@ -127,7 +127,7 @@ public class Entity
     /**
     * Returns entity scale on the Z axis
     */
-    public double getScaleZ()
+    public float getScaleZ()
     {
         return this.scaleZ;
     }
@@ -139,7 +139,7 @@ public class Entity
     /**
     * Returns entity translation on the X axis
     */
-    public double getTranslationX()
+    public float getTranslationX()
     {
         return this.translationX;
     }
@@ -147,7 +147,7 @@ public class Entity
     /**
     * Returns entity translation on the Y axis
     */
-    public double getTranslationY()
+    public float getTranslationY()
     {
         return this.translationY;
     }
@@ -155,7 +155,7 @@ public class Entity
     /**
     * Returns entity translation on the Z axis
     */
-    public double getTranslationZ()
+    public float getTranslationZ()
     {
         return this.translationZ;
     }
@@ -167,7 +167,7 @@ public class Entity
     /**
     * Returns entity rotation on the X axis
     */
-    public double getRotationX()
+    public float getRotationX()
     {
         return this.rotationX;
     }
@@ -175,7 +175,7 @@ public class Entity
     /**
     * Returns entity rotation on the Y axis
     */
-    public double getRotationY()
+    public float getRotationY()
     {
         return this.rotationY;
     }
@@ -183,7 +183,7 @@ public class Entity
     /**
     * Returns entity rotation on the Z axis
     */
-    public double getRotationZ()
+    public float getRotationZ()
     {
         return this.rotationZ;
     }
@@ -201,7 +201,7 @@ public class Entity
     * Sets the exact scale of entity on the X axis
     * @param scaleX scale on the X axis
     */
-    public void setScaleX(double scaleX)
+    public void setScaleX(float scaleX)
     {
         this.scaleX = scaleX;
     }
@@ -210,7 +210,7 @@ public class Entity
     * Sets the exact scale of entity on the Y axis
     * @param scaleY scale on the Y axis
     */
-    public void setScaleY(double scaleY)
+    public void setScaleY(float scaleY)
     {
         this.scaleY = scaleY;
     }
@@ -219,7 +219,7 @@ public class Entity
     * Sets the exact scale of entity on the Z axis
     * @param scaleZ scale on the Z axis
     */
-    public void setScaleZ(double scaleZ)
+    public void setScaleZ(float scaleZ)
     {
         this.scaleZ = scaleZ;
     }
@@ -230,7 +230,7 @@ public class Entity
     * @param scaleY scale on the Y axis
     * @param scaleZ scale on the Z axis
     */
-    public void setScale(double scaleX, double scaleY, double scaleZ)
+    public void setScale(float scaleX, float scaleY, float scaleZ)
     {
         this.scaleX = scaleX;
         this.scaleY = scaleY;
@@ -244,7 +244,7 @@ public class Entity
     * Changes the scale of the entity on the X axis
     * @param scaleX scale change
     */
-    public void scaleX(double scaleX)
+    public void scaleX(float scaleX)
     {
         this.scaleX += scaleX;
     }
@@ -253,7 +253,7 @@ public class Entity
     * Changes the scale of the entity on the Y axis
     * @param scaleY scale change on the Y axis
     */
-    public void scaleY(double scaleY)
+    public void scaleY(float scaleY)
     {
         this.scaleY += scaleY;
     }
@@ -262,7 +262,7 @@ public class Entity
     * Changes the scale of the entity on the Z axis
     * @param scaleZ scale change on the Z axis
     */
-    public void scaleZ(double scaleZ)
+    public void scaleZ(float scaleZ)
     {
         this.scaleZ += scaleZ;
     }
@@ -273,7 +273,7 @@ public class Entity
     * @param scaleY scale change on the Y axis
     * @param scaleZ scale change on the Z axis
     */
-    public void scale(double scaleX, double scaleY, double scaleZ)
+    public void scale(float scaleX, float scaleY, float scaleZ)
     {
         this.scaleX += scaleX;
         this.scaleY += scaleY;
@@ -288,7 +288,7 @@ public class Entity
     * Sets the exact translation of entity on the X axis
     * @param translationX sets translation on the X axis
     */
-    public void setTranslationX(double translationX)
+    public void setTranslationX(float translationX)
     {
         this.translationX = translationX;
     }
@@ -297,7 +297,7 @@ public class Entity
     * Sets the exact translation of entity on the Y axis
     * @param translationY sets translation on the Y axis
     */
-    public void setTranslationY(double translationY)
+    public void setTranslationY(float translationY)
     {
         this.translationY = translationY;
     }
@@ -306,7 +306,7 @@ public class Entity
     * Sets the exact translation of entity on the Z axis
     * @param translationZ sets translation on the Z axis
     */
-    public void setTranslationZ(double translationZ)
+    public void setTranslationZ(float translationZ)
     {
         this.translationZ = translationZ;
     }
@@ -317,7 +317,7 @@ public class Entity
     * @param translationY sets translation on the Y axis
     * @param translationZ sets translation on the Z axis
     */
-    public void setTranslation(double translationX, double translationY, double translationZ)
+    public void setTranslation(float translationX, float translationY, float translationZ)
     {
         this.translationX = translationX;
         this.translationY = translationY;
@@ -331,7 +331,7 @@ public class Entity
     * Translates the entity on the X axis
     * @param translateX translation on the X axis
     */
-    public void translateX(double translateX)
+    public void translateX(float translateX)
     {
         this.translationX += translateX;
     }
@@ -340,7 +340,7 @@ public class Entity
     * Translates the entity on the Y axis
     * @param translateY translation on the Y axis
     */
-    public void translateY(double translateY)
+    public void translateY(float translateY)
     {
         this.translationY += translateY;
     }
@@ -349,7 +349,7 @@ public class Entity
     * Translates the entity on the Z axis
     * @param translateZ translation on the Z axis
     */
-    public void translateZ(double translateZ)
+    public void translateZ(float translateZ)
     {
         this.translationZ += translateZ;
     }
@@ -360,7 +360,7 @@ public class Entity
     * @param translateY translation on the Y axis
     * @param translateZ translation on the Z axis
     */
-    public void translate(double translateX, double translateY, double translateZ)
+    public void translate(float translateX, float translateY, float translateZ)
     {
         this.translationX += translateX;
         this.translationY += translateY;
@@ -377,7 +377,7 @@ public class Entity
     * Sets the exact rotation of entity on the X axis
     * @param rotationX sets rotation on the X axis
     */
-    public void setRotationX(double rotationX)
+    public void setRotationX(float rotationX)
     {
         this.rotationX = rotationX;
     }
@@ -386,7 +386,7 @@ public class Entity
     * Sets the exact rotation of entity on the Y axis
     * @param rotationY sets rotation on the Y axis
     */
-    public void setRotationY(double rotationY)
+    public void setRotationY(float rotationY)
     {
         this.rotationY = rotationY;
     }
@@ -395,7 +395,7 @@ public class Entity
     * Sets the exact rotation of entity on the Z axis
     * @param rotationZ sets rotation on the Z axis
     */
-    public void setRotationZ(double rotationZ)
+    public void setRotationZ(float rotationZ)
     {
         this.rotationZ = rotationZ;
     }
@@ -406,7 +406,7 @@ public class Entity
     * @param rotationY sets rotation on the Y axis
     * @param rotationZ sets rotation on the Z axis
     */
-    public void setRotation(double rotationX, double rotationY, double rotationZ)
+    public void setRotation(float rotationX, float rotationY, float rotationZ)
     {
         this.rotationX = rotationX;
         this.rotationY = rotationY;
@@ -420,7 +420,7 @@ public class Entity
     * Rotates the entity on the X axis
     * @param rotateX rotation on the X axis
     */
-    public void rotateX(double rotateX)
+    public void rotateX(float rotateX)
     {
         this.rotationX += rotateX;
     }
@@ -429,7 +429,7 @@ public class Entity
     * Rotates the entity on the Y axis
     * @param rotateY rotation on the Y axis
     */
-    public void rotateY(double rotateY)
+    public void rotateY(float rotateY)
     {
         this.rotationY += rotateY;
     }
@@ -438,7 +438,7 @@ public class Entity
     * Rotates the entity on the Z axis
     * @param rotateZ rotation on the Z axis
     */
-    public void rotateZ(double rotateZ)
+    public void rotateZ(float rotateZ)
     {
         this.rotationZ += rotateZ;
     }
@@ -449,7 +449,7 @@ public class Entity
     * @param rotateY rotation on the Y axis
     * @param rotateZ rotation on the Z axis
     */
-    public void rotate(double rotateX, double rotateY, double rotateZ)
+    public void rotate(float rotateX, float rotateY, float rotateZ)
     {
         this.rotationX += rotateX;
         this.rotationY += rotateY;

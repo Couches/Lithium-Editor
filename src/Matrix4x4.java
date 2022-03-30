@@ -2,5 +2,10 @@ package src;
 
 public class Matrix4x4
 {
-    double matrix[][] = new double[4][4];
+    float matrix[][] = new float[4][4];
+
+    public Matrix4x4()
+    {
+        
+    }
 }

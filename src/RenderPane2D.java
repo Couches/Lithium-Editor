@@ -36,11 +36,11 @@ class RenderPane2D extends RenderPane
     public void renderEntity(Entity entity, Graphics2D g2d, boolean wireframe)
     {
         ArrayList<Vector3> vertices = entity.getMesh().getVertices();
-        List<int[]> faces = entity.getMesh().getFaces();
+        List<Triangle> triangles = entity.getMesh().getTriangles();
 
         if (wireframe)
         {
-            for (int i = 0; i < faces.size() - 1; i++)
+            for (int i = 0; i < triangles.size() - 1; i++)
             {
                 g2d.setColor(Color.BLACK);
     
@@ -50,21 +50,21 @@ class RenderPane2D extends RenderPane
     
                 g2d.drawPolygon(
                     new int[]{
-                        (int) (-vertices.get(faces.get(i)[0]).getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
-                        (int) (-vertices.get(faces.get(i)[1]).getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
-                        (int) (-vertices.get(faces.get(i)[2]).getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
+                        (int) (-triangles.get(i).triangle[0].getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
+                        (int) (-triangles.get(i).triangle[1].getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
+                        (int) (-triangles.get(i).triangle[2].getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
                     },
                     new int[]{
-                        (int) (-vertices.get(faces.get(i)[0]).getY() * entity.getScaleY() - cameraY + entity.getTranslationZ()),
-                        (int) (-vertices.get(faces.get(i)[1]).getY() * entity.getScaleY() - cameraY + entity.getTranslationZ()),
-                        (int) (-vertices.get(faces.get(i)[2]).getY() * entity.getScaleY() - cameraY + entity.getTranslationZ())
+                        (int) (-triangles.get(i).triangle[0].getY() * entity.getScaleY() - cameraY + entity.getTranslationZ()),
+                        (int) (-triangles.get(i).triangle[1].getY() * entity.getScaleY() - cameraY + entity.getTranslationZ()),
+                        (int) (-triangles.get(i).triangle[2].getY() * entity.getScaleY() - cameraY + entity.getTranslationZ())
                     },
                 3);
             }
         }
         else
         {
-            for (int i = 0; i < faces.size() - 1; i++)
+            for (int i = 0; i < triangles.size() - 1; i++)
             {
                 g2d.setColor(Color.BLACK);
     
@@ -74,14 +74,14 @@ class RenderPane2D extends RenderPane
     
                 g2d.fillPolygon(
                     new int[]{
-                        (int) (-vertices.get(faces.get(i)[0]).getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
-                        (int) (-vertices.get(faces.get(i)[1]).getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
-                        (int) (-vertices.get(faces.get(i)[2]).getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
+                        (int) (-triangles.get(i).triangle[0].getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
+                        (int) (-triangles.get(i).triangle[1].getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
+                        (int) (-triangles.get(i).triangle[2].getX() * entity.getScaleX() - cameraX + entity.getTranslationX()),
                     },
                     new int[]{
-                        (int) (-vertices.get(faces.get(i)[0]).getY() * entity.getScaleY() - cameraY + entity.getTranslationZ()),
-                        (int) (-vertices.get(faces.get(i)[1]).getY() * entity.getScaleY() - cameraY + entity.getTranslationZ()),
-                        (int) (-vertices.get(faces.get(i)[2]).getY() * entity.getScaleY() - cameraY + entity.getTranslationZ())
+                        (int) (-triangles.get(i).triangle[0].getY() * entity.getScaleY() - cameraY + entity.getTranslationZ()),
+                        (int) (-triangles.get(i).triangle[1].getY() * entity.getScaleY() - cameraY + entity.getTranslationZ()),
+                        (int) (-triangles.get(i).triangle[2].getY() * entity.getScaleY() - cameraY + entity.getTranslationZ())
                     },
                 3);
             }

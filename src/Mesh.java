@@ -11,7 +11,7 @@ public class Mesh
 {
     ArrayList<Vector3> vertices = new ArrayList<Vector3>();
 
-    List<int[]> faces = new ArrayList<int[]>();
+    List<Triangle> triangles = new ArrayList<Triangle>();
 
     //Constructor for empty mesh
 
@@ -32,9 +32,9 @@ public class Mesh
         return this.vertices;
     }
 
-    public List<int[]> getFaces()
+    public List<Triangle> getTriangles()
     {
-        return this.faces;
+        return this.triangles;
     }
 
     //Creates mesh from an OBJ file
@@ -57,14 +57,18 @@ public class Mesh
 
                 if (next[0].equals("v"))
                 {
-                    vertices.add(new Vector3(Double.parseDouble(next[1]), Double.parseDouble(next[2]), Double.parseDouble(next[3])));
+                    vertices.add(new Vector3(Float.parseFloat(next[1]), Float.parseFloat(next[2]), Float.parseFloat(next[3])));
                 }
 
                 //Separates face coordinates and adds to face list on "/"
 
                 if (next[0].equals("f"))
                 {
-                    faces.add(new int[] { Integer.parseInt(next[1].split("/")[0]) - 1, Integer.parseInt(next[2].split("/")[0]) - 1, Integer.parseInt(next[3].split("/")[0]) - 1});
+                    triangles.add(new Triangle(
+                        vertices.get(Integer.parseInt(next[1].split("/")[0]) - 1),
+                        vertices.get(Integer.parseInt(next[2].split("/")[0]) - 1),
+                        vertices.get(Integer.parseInt(next[3].split("/")[0]) - 1)
+                    ));
                 }
 
                 
