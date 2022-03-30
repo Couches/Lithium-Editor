@@ -29,8 +29,6 @@ public class RenderPane extends JPanel implements MouseListener, MouseMotionList
 
     Entity entities[] = { new Entity(sphereMesh), new Entity(sphereMesh), new Entity(sphereMesh) };
 
-    //Specify viewport to set direction of camera on scene
-    // 0-front 1-top 2-left 3-right
     public RenderPane()
     {
         addMouseListener(this);

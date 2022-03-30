@@ -21,11 +21,11 @@ class RenderPane3D extends RenderPane
 
     private Matrix4x4 matrixProjection;
 
-    private double nearPlane = 0.1;
-    private double farPlane = 1000.0;
-    private double fieldOfView = 90.0;
-    private double aspectRatio = this.getHeight() / this.getWidth();
-    private double fieldOfViewRadius = 1.0f / Math.tan((fieldOfView * 0.5) / (180.0 * Math.PI));
+    private float nearPlane = 0.1f;
+    private float farPlane = 1000.0f;
+    private float fieldOfView = 90.0f;
+    private float aspectRatio = this.getHeight() / this.getWidth();
+    private float fieldOfViewRadius = (float) (1.0f / Math.tan((fieldOfView * 0.5f) / (180.0f * Math.PI)));
     
 
     public RenderPane3D()
@@ -82,10 +82,10 @@ class RenderPane3D extends RenderPane
 
     private void multiplyMatrixVector(Vector3 i, Vector3 o, Matrix4x4 m)
     {
-        double ox = o.getX();
-        double oy = o.getY();
-        double oz = o.getZ();
-        double w;
+        float ox = o.getX();
+        float oy = o.getY();
+        float oz = o.getZ();
+        float w;
 
         ox = i.getX() * m.matrix[0][0] + i.getY() * m.matrix[1][0] + i.getZ() * m.matrix[2][0] + m.matrix[3][0];
         oy = i.getX() * m.matrix[0][1] + i.getY() * m.matrix[1][1] + i.getZ() * m.matrix[2][1] + m.matrix[3][1];
