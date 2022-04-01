@@ -11,6 +11,11 @@ public class Triangle
         triangle[2] = new Vector3(0, 0, 0);
     }
 
+    public Triangle(Triangle triangle)
+    {
+        this.triangle = triangle.triangle;
+    }
+
     public Triangle(Vector3 point1, Vector3 point2, Vector3 point3)
     {
         triangle[0] = point1;

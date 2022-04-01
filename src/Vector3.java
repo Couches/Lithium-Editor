@@ -5,8 +5,15 @@ import java.util.List;
 public class Vector3
 {
     public float x, y, z;
+    
+    private float magnitude = magnitude(this);
 
-    public Vector3(List<Integer> coords)
+    public Vector3()
+    {
+        
+    }
+
+    public Vector3(List<Float> coords)
     {
         this.x = coords.get(0);
         this.y = coords.get(1);
@@ -20,70 +27,130 @@ public class Vector3
         this.z = z;
     }
 
-    public float getX()
+    public Vector3(Vector4 v)
     {
-        return this.x;
+        this.x = v.x;
+        this.y = v.y;
+        this.z = v.z;
     }
 
-    public float getY()
+    public void magnitude()
     {
-        return this.y;
+        this.magnitude = (float) Math.sqrt(
+        (
+            x * x +
+            y * y +
+            z * z 
+        ));
     }
 
-    public float getZ()
+    public static float magnitude(Vector3 v)
     {
-        return this.z;
+        return (float) Math.sqrt(
+        (
+            v.x * v.x +
+            v.y * v.y +
+            v.z * v.z 
+        ));
     }
 
-    public void setX(float x)
+    public Vector3 normalize()
     {
-        this.x = x;
+        return new Vector3
+        (
+            x / magnitude,
+            y / magnitude,
+            z / magnitude
+        );
     }
 
-    public void setY(float y)
+    public static Vector3 normalize(Vector3 v)
     {
-        this.y = y;
+        return new Vector3
+        (
+            v.x / magnitude(v),
+            v.y / magnitude(v),
+            v.z / magnitude(v)
+        );
     }
 
-    public void setZ(float z)
+    public static float dot(Vector3 v1, Vector3 v2)
     {
-        this.z = z;
+        return (float)
+        (
+            (v1.x * v2.x) +
+            (v1.y * v2.y) +
+            (v1.z * v2.z)
+        );
     }
 
-    public void scale(float xScale, float yScale, float zScale)
+    public Vector3 cross(Vector3 v1)
     {
-        this.x *= xScale;
-        this.y *= yScale;
-        this.z *= zScale;
+        return new Vector3
+        (
+            (y * v1.z) - (z * v1.y),
+            (z * v1.x) - (x * v1.z),
+            (x * v1.y) - (y * v1.x)
+        );
     }
 
-    public void scaleX(float xScale)
+    public static Vector3 cross(Vector3 v1, Vector3 v2)
     {
-        this.x *= xScale;
+        return new Vector3
+        (
+            (v1.y * v2.z) - (v1.z * v2.y),
+            (v1.z * v2.x) - (v1.x * v2.z),
+            (v1.x * v2.y) - (v1.y * v2.x)
+        );
     }
 
-    public void scaleY(float yScale)
+    public static Vector3 mul(Vector3 v, float n)
     {
-        this.y *= yScale;
+        return new Vector3(v.x * n, v.y * n, v.z * n);
     }
 
-    public void scaleZ(float zScale)
+    public Vector3 add(Vector3 v1)
     {
-        this.z *= zScale;
+        return new Vector3
+        (
+            x + v1.x,
+            y + v1.y,
+            z + v1.z
+        );
     }
 
-    public void translateX(float x)
+    public static Vector3 add(Vector3 v1, Vector3 v2)
     {
-        this.x += x;
+        return new Vector3
+        (
+            v1.x + v2.x,
+            v1.y + v2.y,
+            v1.z + v2.z
+        );
     }
 
-    public void translateY(float y)
+    public Vector3 subtract(Vector3 v1)
     {
-        this.y += y;
+        return new Vector3
+        (
+            x - v1.x,
+            y - v1.y,
+            z - v1.z
+        );
     }
 
-    public void translateZ(float z)
+    public static Vector3 subtract(Vector3 v1, Vector3 v2)
     {
-        this.z += z;
+        return new Vector3
+        (
+            v1.x - v2.x,
+            v1.y - v2.y,
+            v1.z - v2.z
+        );
+    }
+
+    public String toString()
+    {
+        return (this.x + " " + this.y + " " + this.z);
     }
 }

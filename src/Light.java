@@ -1,6 +1,6 @@
 package src;
 
-public class Light extends Entity
+public class Light
 {
     private float transformX;
     private float transformY;

@@ -19,7 +19,6 @@ import java.awt.Color;
 public class Display
 {
     public static JFrame frame = new JFrame();
-    public static JPanel panel = new JPanel();
 
     public static ImageIcon icon32x =  new ImageIcon("res\\images\\LithiumEditor32x.png" );
     public static ImageIcon icon128x = new ImageIcon("res\\images\\LithiumEditor128x.png");
@@ -40,7 +39,7 @@ public class Display
 
         frame.setIconImage(icon128x.getImage());
 
-        panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        //panel.setLayout(new FlowLayout(FlowLayout.LEFT));
         
         frame.setTitle(title);
         frame.setSize(width, height);
@@ -54,11 +53,6 @@ public class Display
         });
 
         
-    }
-
-    public JPanel getPanel()
-    {
-        return panel;
     }
 
     public JFrame getFrame()

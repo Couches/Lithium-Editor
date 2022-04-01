@@ -12,39 +12,30 @@ import javax.swing.event.ChangeListener;
 class RenderPane3D extends RenderPane
 {
     Entity entities[] = {
-        new Entity(new Mesh("res\\models\\cube.obj"), 100, 100, 100, 10, 10, 10),
+        new Entity(new Mesh("res\\models\\monkey.obj"), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(1000.0f, 500.0f, 2000.0f), new Vector3(100.0f, 50.0f, 10.0f)),
     };
 
     private boolean orthographic = true;
     
     private JButton projectionButton = new JButton();
-    private JSlider fieldOfViewSlider = new JSlider(0, 250, 10);
+    private JSlider fieldOfViewSlider = new JSlider(1, 175, 90);
     private JLabel fieldOfViewLabel = new JLabel();
 
     private JPanel sliderContainer = new JPanel();
-    private JSlider xRotationSlider = new JSlider(0, (int) (10 * 6.28319), 0);
-    private JSlider yRotationSlider = new JSlider(0, (int) (10 * 6.28319), 0);
-    private JSlider zRotationSlider = new JSlider(0, (int) (10 * 6.28319), 0);
+    private JSlider xRotationSlider = new JSlider(0, (int) 360, 0);
+    private JSlider yRotationSlider = new JSlider(0, (int) 360, 0);
+    private JSlider zRotationSlider = new JSlider(0, (int) 360, 0);
 
-    private float rotationX = 0.0f;
-    private float rotationY = 0.0f;
-    private float rotationZ = 0.0f;
+    private static final Vector3 WORLD_UP = new Vector3(0, 1, 0);
 
-    //Projection matrix
+    Vector3 cameraPos = new Vector3();
 
-    private Matrix4x4 matrixProjection = new Matrix4x4();
+    private float yaw, pitch;
 
-    Matrix4x4 matrixRotationZ = new Matrix4x4();
-    Matrix4x4 matrixRotationX = new Matrix4x4();
-
-    private float nearPlane = 0.1f;
-    private float farPlane = 1000.0f;
-    private float fieldOfView = 10.0f;
+    private float fov = 90.0f;
     private float aspectRatio = 1.0f;
-    private float fieldOfViewRadius;
-
-    
-    
+    private float zNear = 0.1f;
+    private float zFar = 1000.0f;
 
     public RenderPane3D()
     {
@@ -54,8 +45,13 @@ class RenderPane3D extends RenderPane
         add(fieldOfViewSlider);
         add(fieldOfViewLabel);
 
+        sliderContainer.add(new JLabel("X Rotation:"));
         sliderContainer.add(xRotationSlider);
+
+        sliderContainer.add(new JLabel("Y Rotation:"));
         sliderContainer.add(yRotationSlider);
+
+        sliderContainer.add(new JLabel("Z Rotation:"));
         sliderContainer.add(zRotationSlider);
 
         add(sliderContainer);
@@ -77,107 +73,100 @@ class RenderPane3D extends RenderPane
 
         for (int i = 0; i < entities.length; i++)
         {
-            renderEntity(entities[i], g2d, wireframe, orthographic);
-        }
-    }
-
-    public void renderEntity(Entity entity, Graphics2D g2d, boolean wireframe, boolean orthographic)
-    {
-        ArrayList<Vector3> vertices = entity.getMesh().getVertices();
-        List<Triangle> triangles = entity.getMesh().getTriangles();
-
-        g2d.setColor(Color.BLACK);
-
-        for (int i = 0; i < triangles.size() - 1; i++)
-        {
-            Triangle triangleProjected = new Triangle();
-
-            Triangle triangleTranslated = triangles.get(i);
-
-            triangleTranslated.triangle[0].z = 0.0f;
-            triangleTranslated.triangle[1].z = 0.0f;
-            triangleTranslated.triangle[2].z = 0.0f;
-
-            multiplyMatrixVector(triangleTranslated.triangle[0], triangleProjected.triangle[0], matrixRotationX);
-            multiplyMatrixVector(triangleTranslated.triangle[1], triangleProjected.triangle[1], matrixRotationX);
-            multiplyMatrixVector(triangleTranslated.triangle[2], triangleProjected.triangle[2], matrixRotationX);
-
-            multiplyMatrixVector(triangleProjected.triangle[0], triangleProjected.triangle[0], matrixRotationZ);
-            multiplyMatrixVector(triangleProjected.triangle[1], triangleProjected.triangle[1], matrixRotationZ);
-            multiplyMatrixVector(triangleProjected.triangle[2], triangleProjected.triangle[2], matrixRotationZ);
-
-            
-
-            g2d.drawPolygon(
-                new int[]
-                {
-                    (int) (-triangleProjected.triangle[0].getX() * 50) - cameraX,
-                    (int) (-triangleProjected.triangle[1].getX() * 50) - cameraX,
-                    (int) (-triangleProjected.triangle[2].getX() * 50) - cameraX,
-                },
-                new int[]
-                {
-                    (int) (-triangleProjected.triangle[0].getY() * 50) - cameraY,
-                    (int) (-triangleProjected.triangle[1].getY() * 50) - cameraY,
-                    (int) (-triangleProjected.triangle[2].getY() * 50) - cameraY,
-                }, 
-            3);
-        }
-    }
-
-    private void multiplyMatrixVector(Vector3 i, Vector3 o, Matrix4x4 m)
-    {
-        float w;
-
-        o.setX(i.getX() * m.matrix[0][0] + i.getY() * m.matrix[1][0] + i.getZ() * m.matrix[2][0] + m.matrix[3][0]);
-        o.setY(i.getX() * m.matrix[0][1] + i.getY() * m.matrix[1][1] + i.getZ() * m.matrix[2][1] + m.matrix[3][1]);
-        o.setZ(i.getX() * m.matrix[0][2] + i.getY() * m.matrix[1][2] + i.getZ() * m.matrix[2][2] + m.matrix[3][2]);
-        w  =   i.getX() * m.matrix[0][3] + i.getY() * m.matrix[1][3] + i.getZ() * m.matrix[2][3] + m.matrix[3][3];
-
-        if (w != 0.0f)
-        {
-            o.setX(o.getX() / w);
-            o.setY(o.getY() / w);
-            o.setZ(o.getZ() / w);
+            renderEntity(entities[i], cameraPos, g2d);
         }
     }
 
     public void updatePane3D()
     {
-        //Update fov radius to fieldOfView changes
+        projectionButton.setText("Projection: " + (orthographic ? "Orthographic" : "Perspective"));
+        fieldOfViewLabel.setText("Field Of View: " + fov);
 
-        float fieldOfViewRadius = (float) (1.0f / (float) Math.tan((fieldOfView * 0.5f) / (180.0f * (float) Math.PI)));
+        repaint();
+    }
 
-        matrixProjection.matrix[0][0] = aspectRatio * fieldOfViewRadius;
-        matrixProjection.matrix[1][1] = fieldOfViewRadius;
-        matrixProjection.matrix[2][2] = farPlane / (farPlane - nearPlane);
-        matrixProjection.matrix[3][2] = (-farPlane * nearPlane) / (farPlane - nearPlane);
-        matrixProjection.matrix[2][3] = 1.0f;
-        matrixProjection.matrix[3][3] = 1.0f;
 
-        //Update rotations
+
+    public void renderEntity(Entity entity, Vector3 cameraPos, Graphics2D g2d)
+    {
+        Vector3 front = new Vector3();
+
+        front.x = (float) Math.cos(Math.toRadians(yaw)) * (float) Math.cos(Math.toRadians(pitch));
+        front.y = (float) Math.sin(Math.toRadians(pitch));
+        front.z = (float) Math.sin(Math.toRadians(yaw)) * (float) Math.cos(Math.toRadians(pitch));
+
+        front = Vector3.normalize(front);
+
+        Vector3 right = Vector3.normalize(front.cross(WORLD_UP));
+        Vector3 up = Vector3.normalize(right.cross(front));
+
+        List<Triangle> triangles = entity.getMesh().getTriangles();
+            
+        Matrix4 projection = Matrix4.perspective(fov, aspectRatio, zNear, zFar);
+
+        Vector3 p0, p1, p2;
+        Matrix4 view = new Matrix4();
+        Matrix4 model = entity.matrix;
 
         
 
-        //Rotation X
-        matrixRotationX.matrix[0][0] = (float) Math.cos(rotationX);
-        matrixRotationX.matrix[0][1] = (float) Math.sin(rotationX);
-        matrixRotationX.matrix[1][0] = (float)-Math.sin(rotationX);
-        matrixRotationX.matrix[1][1] = (float) Math.cos(rotationX);
-        matrixRotationX.matrix[2][2] = 1;
-        matrixRotationX.matrix[3][3] = 1;
+        
 
-        //Rotation Z
-        matrixRotationZ.matrix[0][0] = 1;
-        matrixRotationZ.matrix[0][1] = (float) Math.cos(rotationZ);
-        matrixRotationZ.matrix[1][0] = (float) Math.sin(rotationZ);
-        matrixRotationZ.matrix[1][1] = (float)-Math.sin(rotationZ);
-        matrixRotationZ.matrix[2][2] = (float) Math.cos(rotationZ);
-        matrixRotationZ.matrix[3][3] = 1;
+        model = model.rotate(model, (float) Math.toRadians(entity.getRotation().x), new Vector3(1.0f, 0.0f, 0.0f));
+        model = model.rotate(model, (float) Math.toRadians(entity.getRotation().y), new Vector3(0.0f, 1.0f, 0.0f));
+        model = model.rotate(model, (float) Math.toRadians(entity.getRotation().z), new Vector3(0.0f, 0.0f, 1.0f));
 
-        projectionButton.setText("Projection: " + (orthographic ? "Orthographic" : "Perspective"));
-        fieldOfViewLabel.setText("Field Of View: " + fieldOfView);
+        model = model.scale(model, entity.getScale());
+
+        model = model.translate(model, entity.getTranslation());
+
+        Vector4 sp0, sp1, sp2;
+
+        for (int i = 0; i < triangles.size() - 1; i++)
+        {
+            p0 = triangles.get(i).triangle[0];
+            p1 = triangles.get(i).triangle[1];
+            p2 = triangles.get(i).triangle[2];
+            
+            view = Matrix4.lookAt(cameraPos, cameraPos.add(front), up);
+
+            //System.out.println(view.c[0].toString() + " " + view.c[1].toString() + " " + view.c[2].toString() + " " + view.c[3].toString());
+
+            sp0 = projection.mul(view.mul(model.mul(new Vector4(p0, 1.0f))));
+            sp1 = projection.mul(view.mul(model.mul(new Vector4(p1, 1.0f))));
+            sp2 = projection.mul(view.mul(model.mul(new Vector4(p2, 1.0f))));
+
+            //System.out.println(sp0.toString() + " " + sp1.toString() + " " + sp2.toString());
+
+            g2d.drawPolygon(
+                new int[]{
+                    (int) (sp0.x) - cameraX, 
+                    (int) (sp1.x) - cameraX, 
+                    (int) (sp2.x) - cameraX, 
+                },
+                new int[]{
+                    (int) (sp0.y) - cameraY, 
+                    (int) (sp1.y) - cameraY, 
+                    (int) (sp2.y) - cameraY,
+                },
+            3);
+
+            updatePane3D();
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void addJElementListeners()
     {
@@ -197,7 +186,8 @@ class RenderPane3D extends RenderPane
             @Override
             public void stateChanged(ChangeEvent e)
             {
-                fieldOfView = (float) fieldOfViewSlider.getValue();
+                //FOV SLIDER
+                fov = (float) fieldOfViewSlider.getValue() / 10.0f;
                 repaint();
                 updatePane3D();
             }
@@ -210,7 +200,22 @@ class RenderPane3D extends RenderPane
             @Override
             public void stateChanged(ChangeEvent e)
             {
-                rotationX = (float) xRotationSlider.getValue() / 10;
+                //rotationX = (float) xRotationSlider.getValue() / 10;
+                entities[0].rotation.x = (float) xRotationSlider.getValue();
+                repaint();
+                updatePane3D();
+            }
+            
+        });
+
+        yRotationSlider.addChangeListener(new ChangeListener()
+        {
+
+            @Override
+            public void stateChanged(ChangeEvent e)
+            {
+                //rotationY = (float) yRotationSlider.getValue() / 10;
+                entities[0].rotation.y = (float) yRotationSlider.getValue();
                 repaint();
                 updatePane3D();
             }
@@ -223,11 +228,14 @@ class RenderPane3D extends RenderPane
             @Override
             public void stateChanged(ChangeEvent e)
             {
-                rotationZ = (float) zRotationSlider.getValue() / 10;
+                //rotationZ = (float) zRotationSlider.getValue();
+                entities[0].rotation.z = (float) zRotationSlider.getValue();
                 repaint();
                 updatePane3D();
             }
-            
+
         });
+
+        
     }
 }

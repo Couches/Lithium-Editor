@@ -25,10 +25,6 @@ public class RenderPane extends JPanel implements MouseListener, MouseMotionList
     public JLabel cameraLabel = new JLabel();
     private JButton wireframeButton = new JButton();
 
-    Mesh sphereMesh = new Mesh("res\\models\\sphere.obj");
-
-    Entity entities[] = { new Entity(sphereMesh), new Entity(sphereMesh), new Entity(sphereMesh) };
-
     public RenderPane()
     {
         addMouseListener(this);
