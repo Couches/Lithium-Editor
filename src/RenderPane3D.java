@@ -101,24 +101,25 @@ class RenderPane3D extends RenderPane
         Vector3 up = Vector3.normalize(right.cross(front));
 
         List<Triangle> triangles = entity.getMesh().getTriangles();
-            
-        Matrix4 projection = Matrix4.perspective(fov, aspectRatio, zNear, zFar);
+
+        float aspect = (float)getWidth() / (float)getHeight();
+        Matrix4 projection = Matrix4.perspective(fov, aspect, zNear, zFar);
 
         Vector3 p0, p1, p2;
-        Matrix4 view = new Matrix4();
-        Matrix4 model = entity.matrix;
+        Matrix4 view = Matrix4.lookAt(cameraPos, cameraPos.add(front), up);
 
         
+//System.out.println(entity.getRotation().x);
 
-        
+        Matrix4 model = new Matrix4(1.0f); // identity matrix
+        model = Matrix4.rotate(model, (float) Math.toRadians(entity.getRotation().x), new Vector3(1.0f, 0.0f, 0.0f));
+        model = Matrix4.rotate(model, (float) Math.toRadians(entity.getRotation().y), new Vector3(0.0f, 1.0f, 0.0f));
+        model = Matrix4.rotate(model, (float) Math.toRadians(entity.getRotation().z), new Vector3(0.0f, 0.0f, 1.0f));
 
-        model = model.rotate(model, (float) Math.toRadians(entity.getRotation().x), new Vector3(1.0f, 0.0f, 0.0f));
-        model = model.rotate(model, (float) Math.toRadians(entity.getRotation().y), new Vector3(0.0f, 1.0f, 0.0f));
-        model = model.rotate(model, (float) Math.toRadians(entity.getRotation().z), new Vector3(0.0f, 0.0f, 1.0f));
+        model = Matrix4.scale(model, entity.getScale());
+        model = Matrix4.scale(model, new Vector3(.1f, .1f, .1f)); // constant scale, can remove later
 
-        model = model.scale(model, entity.getScale());
-
-        model = model.translate(model, entity.getTranslation());
+        model = Matrix4.translate(model, entity.getTranslation());
 
         Vector4 sp0, sp1, sp2;
 
@@ -128,7 +129,7 @@ class RenderPane3D extends RenderPane
             p1 = triangles.get(i).triangle[1];
             p2 = triangles.get(i).triangle[2];
             
-            view = Matrix4.lookAt(cameraPos, cameraPos.add(front), up);
+          //  view = Matrix4.lookAt(cameraPos, cameraPos.add(front), up);
 
             //System.out.println(view.c[0].toString() + " " + view.c[1].toString() + " " + view.c[2].toString() + " " + view.c[3].toString());
 

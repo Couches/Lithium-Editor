@@ -11,20 +11,26 @@ public class Matrix4
     
     public Matrix4()
     {
-        this(0.0f);
+        this(1.0f);
     }
 
+    /**
+     * Creates a new 4x4 matrix with a value along the diagonal. All
+     * other values are 0.
+     *
+     * @param n The value to populate the diagonal with.
+     */
     public Matrix4(float n)
     {
-        _11 = n; _21 = n; _31 = n; _41 = n;
-        _12 = n; _22 = n; _32 = n; _42 = n;
-        _13 = n; _23 = n; _33 = n; _43 = n;
-        _14 = n; _24 = n; _34 = n; _44 = n;
+        _11 = n; _21 = 0; _31 = 0; _41 = 0;
+        _12 = 0; _22 = n; _32 = 0; _42 = 0;
+        _13 = 0; _23 = 0; _33 = n; _43 = 0;
+        _14 = 0; _24 = 0; _34 = 0; _44 = n;
 
-        for (int i = 0; i <= 3; i++)
-        {
-            c[i] = new Vector4(0.0f, 0.0f, 0.0f, 0.0f);
-        }
+        c[0] = new Vector4(1, 0, 0, 0);
+        c[1] = new Vector4(0, 1, 0, 0);
+        c[2] = new Vector4(0, 0, 1, 0);
+        c[3] = new Vector4(0, 0, 0, 1);
     }
 
     /**
@@ -37,10 +43,10 @@ public class Matrix4
         _13 = v1.x; _23 = v1.y; _33 = v1.z; _43 = v1.w;
         _14 = v1.x; _24 = v1.y; _34 = v1.z; _44 = v1.w;
 
-        this.c[0] = v1;
-        this.c[1] = v2;
-        this.c[2] = v3;
-        this.c[3] = v4; 
+        this.c[0] = new Vector4(v1);
+        this.c[1] = new Vector4(v2);
+        this.c[2] = new Vector4(v3);
+        this.c[3] = new Vector4(v4);
     }
 
     /**
@@ -132,32 +138,30 @@ public class Matrix4
         return result;
     }
 
-    public Matrix4 rotate(Matrix4 matrix, float angle, Vector3 axis)
+    public static Matrix4 rotate(Matrix4 mat4, float angle, Vector3 axis)
     {
-        float c = (float) Math.cos(angle);
-        float s = (float) Math.sin(angle);
+        final float c = (float) Math.cos(angle);
+        final float s = (float) Math.sin(angle);
 
-        Vector3 a = Vector3.normalize(axis);
-        Vector3 t = Vector3.mul(axis, (1.0f - c));
+        Vector3 a = axis.normalize();
+        Vector3 t = axis.mul(1 - c);
 
-        Matrix4 rotation = new Matrix4
-        (
-			new Vector4(c + t.x * a.x, t.x * a.y + s * a.z, t.x * a.z - s * a.y, 0.0f),
-			new Vector4(t.y * a.x - s * a.z, c + t.y * a.y, t.x * a.z + s * a.x, 0.0f),
-			new Vector4(t.z * a.x + s * a.y, t.z * a.y - s * a.x, c + t.z * a.z, 0.0f),
-			new Vector4(0.0f, 0.0f, 0.0f, 1.0f)
-		);
+        Matrix4 rotation = new Matrix4(
+                new Vector4(c + t.x * a.x, t.x * a.y + s * a.z, t.x * a.z - s * a.y, 0.0f),
+                new Vector4(t.y * a.x - s * a.z, c + t.y * a.y, t.x * a.z + s * a.x, 0.0f),
+                new Vector4(t.z * a.x + s * a.y, t.z * a.y - s * a.x, c + t.z * a.z, 0.0f),
+                new Vector4(0.0f, 0.0f, 0.0f, 1.0f)
+        );
 
-        return new Matrix4
-        (
-			matrix.c[0].mul(rotation.c[0].x).add(matrix.c[1].mul(rotation.c[0].y)).add(matrix.c[2].mul(rotation.c[0].z)),
-			matrix.c[0].mul(rotation.c[1].x).add(matrix.c[1].mul(rotation.c[1].y)).add(matrix.c[2].mul(rotation.c[1].z)),
-			matrix.c[0].mul(rotation.c[2].x).add(matrix.c[1].mul(rotation.c[2].y)).add(matrix.c[2].mul(rotation.c[2].z)),
-			rotation.c[3]
-		);
+        return new Matrix4(
+                mat4.c[0].mul(rotation.c[0].x).add(mat4.c[1].mul(rotation.c[0].y)).add(mat4.c[2].mul(rotation.c[0].z)),
+                mat4.c[0].mul(rotation.c[1].x).add(mat4.c[1].mul(rotation.c[1].y)).add(mat4.c[2].mul(rotation.c[1].z)),
+                mat4.c[0].mul(rotation.c[2].x).add(mat4.c[1].mul(rotation.c[2].y)).add(mat4.c[2].mul(rotation.c[2].z)),
+                rotation.c[3]
+        );
     }
 
-    public Matrix4 scale(Matrix4 matrix, Vector3 scale)
+    public static Matrix4 scale(Matrix4 matrix, Vector3 scale)
     {
         return new Matrix4
         (
@@ -168,7 +172,7 @@ public class Matrix4
         );
     }
 
-    public Matrix4 translate(Matrix4 matrix, Vector3 translation)
+    public static Matrix4 translate(Matrix4 matrix, Vector3 translation)
     {
         return new Matrix4
         (

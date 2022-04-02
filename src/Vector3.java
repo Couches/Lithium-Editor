@@ -5,8 +5,6 @@ import java.util.List;
 public class Vector3
 {
     public float x, y, z;
-    
-    private float magnitude = magnitude(this);
 
     public Vector3()
     {
@@ -34,28 +32,24 @@ public class Vector3
         this.z = v.z;
     }
 
-    public void magnitude()
+    public float magnitude()
     {
-        this.magnitude = (float) Math.sqrt(
+        return (float) Math.sqrt(
         (
             x * x +
             y * y +
-            z * z 
+            z * z
         ));
     }
 
     public static float magnitude(Vector3 v)
     {
-        return (float) Math.sqrt(
-        (
-            v.x * v.x +
-            v.y * v.y +
-            v.z * v.z 
-        ));
+        return v.magnitude();
     }
 
     public Vector3 normalize()
     {
+        float magnitude = magnitude();
         return new Vector3
         (
             x / magnitude,
@@ -66,22 +60,15 @@ public class Vector3
 
     public static Vector3 normalize(Vector3 v)
     {
-        return new Vector3
-        (
-            v.x / magnitude(v),
-            v.y / magnitude(v),
-            v.z / magnitude(v)
-        );
+        return v.normalize();
     }
 
     public static float dot(Vector3 v1, Vector3 v2)
     {
-        return (float)
-        (
+        return
             (v1.x * v2.x) +
             (v1.y * v2.y) +
-            (v1.z * v2.z)
-        );
+            (v1.z * v2.z);
     }
 
     public Vector3 cross(Vector3 v1)
@@ -103,6 +90,8 @@ public class Vector3
             (v1.x * v2.y) - (v1.y * v2.x)
         );
     }
+
+    public Vector3 mul(float n) { return new Vector3(x * n, y * n, z * n); }
 
     public static Vector3 mul(Vector3 v, float n)
     {

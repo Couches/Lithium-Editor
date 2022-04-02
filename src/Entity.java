@@ -5,10 +5,10 @@ public class Entity
     private Mesh mesh;
 
     public Matrix4 matrix = new Matrix4(
-        new Vector4(0.1f, 0.0f, 0.0f, 0.0f),
-        new Vector4(0.0f, 0.1f, 0.0f, 0.0f),
-        new Vector4(0.0f, 0.0f, 0.1f, 0.0f),
-        new Vector4(0.0f, 0.0f, 0.0f, 0.1f)
+        new Vector4(.1f, 0.0f, 0.0f, 0.0f),
+        new Vector4(0.0f, .1f, 0.0f, 0.0f),
+        new Vector4(0.0f, 0.0f, .1f, 0.0f),
+        new Vector4(0.0f, 0.0f, 0.0f, 1f)
     );
 
     public Vector3 translation;

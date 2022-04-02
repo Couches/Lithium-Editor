@@ -53,46 +53,33 @@ public class Vector4
 
     public static float magnitude(Vector4 v)
     {
-        return (float) Math.sqrt(
-        (
-            v.x * v.x +
-            v.y * v.y +
-            v.z * v.z 
-        ));
-        
+        return v.magnitude();
     }
 
     public Vector4 normalize()
     {
+        float magnitude = magnitude();
         return new Vector4
         (
-            x / magnitude(),
-            y / magnitude(),
-            z / magnitude(),
-            w / magnitude()
+            x / magnitude,
+            y / magnitude,
+            z / magnitude,
+            w / magnitude
         );
     }
 
     public static Vector4 normalize(Vector4 v)
     {
-        return new Vector4
-        (
-            v.x / magnitude(v),
-            v.y / magnitude(v),
-            v.z / magnitude(v),
-            v.w / magnitude(v)
-        );
+        return v.normalize();
     }
 
     public static float dot(Vector4 v1, Vector4 v2)
     {
-        return (float)
-        (
+        return
             (v1.x * v2.x) +
             (v1.y * v2.y) +
             (v1.z * v2.z) +
-            (v1.w * v2.w)
-        );
+            (v1.w * v2.w);
     }
 
     public static Vector4 cross(Vector4 v1, Vector4 v2)
@@ -126,6 +113,11 @@ public class Vector4
             v1.z + v2.z,
             v1.w + v2.w
         );
+    }
+
+    public Vector4 mul(Vector4 other)
+    {
+        return new Vector4(x * other.x, y * other.y, z * other.z, w * other.w);
     }
 
     public String toString()
